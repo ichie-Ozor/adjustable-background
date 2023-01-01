@@ -1,23 +1,44 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect, useRef, useState } from 'react'
+
+
+
 
 function App() {
+  const countRef = useRef()
+const [count, setCount] = useState({
+  left:50,
+  right: 50
+})
+ const leftHandler = () => {
+    setCount({
+      left:count.left + 1,
+      right:count.right - 1
+  })
+ }
+
+const rightHandler = () => {
+  setCount({
+    left:count.left - 1,
+    right:count.right +1
+  })
+}
+
+ useEffect(() => {
+  console.log("see useEffect");
+    console.log(typeof count.left);
+    countRef.current.style.width = count.left + "%"
+}, [count]);
+
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div ref={countRef} className="App">
+      <div className="container">
+        <div className="left" onClick={leftHandler}>{count.left}%</div>
+        <div className="right" onClick={rightHandler}>{count.right}%</div>
+      </div>
     </div>
   );
 }
